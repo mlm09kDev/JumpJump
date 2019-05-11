@@ -9,7 +9,12 @@ import com.mlm09kdev.jump_jump.Framework.GameObject;
 public class Squirrel extends DynamicGameObject {
     public static final float SQUIRREL_WIDTH = 1;
     public static final float SQUIRREL_HEIGHT = 0.6f;
-    public static final float SQUIRREL_VELOCITY = 3f;
+
+    public void setSQUIRREL_VELOCITY(float SQUIRREL_VELOCITY) {
+        this.SQUIRREL_VELOCITY = SQUIRREL_VELOCITY;
+    }
+
+    public float SQUIRREL_VELOCITY = 3f;
 
    public float stateTime = 0;
 

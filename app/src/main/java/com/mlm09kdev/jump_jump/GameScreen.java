@@ -221,6 +221,9 @@ public class GameScreen extends GLScreen {
     }
 
     private void presentReady() {
+        String topText = "Level "+ World.level;
+        float topWidth = Assets.font.glyphWidth * topText.length();
+        Assets.font.drawText(batcher, topText, 160 - topWidth / 2, 480 - 40);
         batcher.drawSprite(160, 240, 192, 32, Assets.ready);
     }
 
