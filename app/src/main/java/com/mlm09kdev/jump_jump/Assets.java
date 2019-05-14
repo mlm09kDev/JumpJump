@@ -37,6 +37,9 @@ public class Assets {
     public static Animation brakingPlatform;
     public static Font font;
 
+    public static Texture test;
+    public static TextureRegion testRec;
+
     public static Music music;
     public static Sound jumpSound;
     public static Sound highJumpSound;
@@ -47,6 +50,7 @@ public class Assets {
     public static void load(GLGame game){
         background = new Texture(game, "background.png");
         backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
+
 
         items = new Texture(game, "items.png");
         mainMenu = new TextureRegion(items, 0, 224, 300, 110);
@@ -83,6 +87,8 @@ public class Assets {
                 new TextureRegion(items, 64, 176, 64, 16),
                 new TextureRegion(items, 64, 192, 64, 16),
                 new TextureRegion(items, 64, 208, 64, 16));
+
+        testRec = new TextureRegion(items,370,446,142 ,66);
 
         font = new Font(items, 224, 0, 16, 16, 20);
 

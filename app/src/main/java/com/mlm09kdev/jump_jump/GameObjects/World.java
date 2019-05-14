@@ -39,6 +39,7 @@ public class World {
     public final WorldListener listener;
     public final Random rand;
 
+    private boolean isEnemyReadyToBeGenerated;
     public float heightSoFar;
     public int score;
     public int state;
@@ -85,12 +86,15 @@ public class World {
                 springs.add(spring);
             }
 
-            if (level >= 15 && y > WORLD_HEIGHT / 2 && rand.nextFloat() > 0.8f) {
+            if (isEnemyReadyToBeGenerated && level >= 15 && y > WORLD_HEIGHT / 4 && rand.nextFloat() > 0.9f - ((level/25f)-.35)) {
                 Squirrel squirrel = new Squirrel(platform.position.x
                         + rand.nextFloat(), platform.position.y
                         + Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * 2);
-                squirrel.setSQUIRREL_VELOCITY(.5f + level / 15 < 5f ? .5f + level / 15 : 5f);
+                squirrel.setSQUIRREL_VELOCITY(.5f + level / 5 < 5f ? .5f + level / 5 : 5f);
                 squirrels.add(squirrel);
+                isEnemyReadyToBeGenerated = false;
+            } else {
+                isEnemyReadyToBeGenerated = true;
             }
 
             if (rand.nextFloat() > 0.7f) {
@@ -180,7 +184,7 @@ public class World {
                         .overlapRectangles(player.bounds, platform.bounds)) {
                     player.hitPlatform();
                     listener.jump();
-                    if (level > 15 && rand.nextFloat() > 0.5f) {
+                    if (level >= 5 && rand.nextFloat() > 0.9f - (level/25f)) {
                         platform.pulverize();
                     }
                     break;

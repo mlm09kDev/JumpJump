@@ -29,8 +29,8 @@ public class MainMenuScreen extends GLScreen {
     int logoWidth = 800;
     int logoHeight = 500;
 
-    int mainMenuX = 540;
-    int mainMenuY = 1445 - 745;
+    int mainMenuX = screenWidth/2;
+    int mainMenuY = screenWidth-300;
     int mainMenuWidth = 800;
     int mainMenuHeight = 498;
 
@@ -45,16 +45,24 @@ public class MainMenuScreen extends GLScreen {
     Rectangle highscoresBounds;
     Rectangle helpBounds;
     Vector2 touchPoint;
+    Rectangle test;
 
     public MainMenuScreen(Game game) {
         super(game);
         guiCam = new Camera2D(glGraphics, screenWidth, screenHeight);
         batcher = new SpriteBatcher(glGraphics, mainMenuHeight);
-        playBounds = new Rectangle(mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight / 3);
-        highscoresBounds = new Rectangle(mainMenuX, mainMenuY - 166, mainMenuWidth, mainMenuHeight / 3);
-        helpBounds = new Rectangle(mainMenuX, mainMenuY - 332, mainMenuWidth, mainMenuHeight / 3);
+
+/*        playBounds = new Rectangle(160-150, 200+18, 300, 36);
+        highscoresBounds = new Rectangle(160-150, 200-18, 300, 36);
+        helpBounds = new Rectangle(160-150, 200-18-36, 300, 36);*/
+
+        playBounds = new Rectangle(mainMenuX, mainMenuY+165, mainMenuWidth-400, mainMenuHeight-315);
+        highscoresBounds = new Rectangle(mainMenuX, mainMenuY-10, mainMenuWidth+50, mainMenuHeight-315);
+        helpBounds = new Rectangle(mainMenuX, mainMenuY-185, mainMenuWidth-350, mainMenuHeight-315);
         soundBounds = new Rectangle(0, 0, SoundIconWidthHeight, SoundIconWidthHeight);
         touchPoint = new Vector2();
+        test = new Rectangle(screenWidth, screenHeight, 50, 50);
+
     }
 
     @Override
@@ -79,11 +87,11 @@ public class MainMenuScreen extends GLScreen {
                     game.setScreen(new HighScoreScreen(game));
                     return;
                 }
-                if (OverlapTester.pointInRectangle(helpBounds, touchPoint)) {
+             /*   if (OverlapTester.pointInRectangle(helpBounds, touchPoint)) {
                     Assets.playSound(Assets.clickSound);
                     game.setScreen(new HelpScreen(game));
                     return;
-                }
+                }*/
                 if (OverlapTester.pointInRectangle(soundBounds, touchPoint)) {
                     Assets.playSound(Assets.clickSound);
                     Settings.soundEnabled = !Settings.soundEnabled;
@@ -115,6 +123,7 @@ public class MainMenuScreen extends GLScreen {
 
         batcher.drawSprite(logoX, logoY, logoWidth, logoHeight, Assets.logo);
         batcher.drawSprite(mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight, Assets.mainMenu);
+       // batcher.drawSprite(mainMenuX, mainMenuY+165, mainMenuWidth-400, mainMenuHeight-315, Assets.testRec);
 
         batcher.drawSprite(soundIconXY, soundIconXY, SoundIconWidthHeight, SoundIconWidthHeight, Settings.soundEnabled ? Assets.soundOn : Assets.soundOff);
 
