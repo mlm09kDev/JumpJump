@@ -65,8 +65,11 @@ public class GameScreen extends GLScreen {
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
         resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
         quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
-        lastScore = 0;
-        scoreString = "score: 0";
+        if(world.level > 1)
+            lastScore = world.score;
+        else
+            lastScore = 0;
+        scoreString = "score: " + world.score;
     }
 
     @Override
@@ -238,12 +241,10 @@ public class GameScreen extends GLScreen {
     }
 
     private void presentLevelEnd() {
-        String topText = "the princess is ...";
-        String bottomText = "in another castle!";
+        String topText = 10 - world.getCoins()+"/10 Coins Gathered";
         float topWidth = Assets.font.glyphWidth * topText.length();
-        float bottomWidth = Assets.font.glyphWidth * bottomText.length();
         Assets.font.drawText(batcher, topText, 160 - topWidth / 2, 480 - 40);
-        Assets.font.drawText(batcher, bottomText, 160 - bottomWidth / 2, 40);
+
     }
 
     private void presentGameOver() {

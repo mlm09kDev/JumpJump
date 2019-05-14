@@ -39,23 +39,24 @@ public class World {
     public final WorldListener listener;
     public final Random rand;
 
-    private boolean isEnemyReadyToBeGenerated;
+    private boolean isSpringLoaded;
     public float heightSoFar;
-    public int score;
+    public static int score = 0;
+    public int levelScore;
     public int state;
 
     public World(WorldListener listener) {
         rand = new Random();
-        this.player = new Player(rand.nextInt(8)+1, 1);
+        this.player = new Player(rand.nextInt(8) + 1, 1);
         this.platforms = new ArrayList<>();
         this.springs = new ArrayList<>();
         this.squirrels = new ArrayList<>();
         this.coins = new ArrayList<>();
         this.listener = listener;
+        this.levelScore =0;
         generateLevel();
 
         this.heightSoFar = 0;
-        this.score = 0;
         this.state = WORLD_STATE_RUNNING;
     }
 
@@ -71,38 +72,23 @@ public class World {
                 type = rand.nextFloat() > level / 50f ? Platform.PLATFORM_TYPE_STATIC
                         : Platform.PLATFORM_TYPE_MOVING;
             }
-            float x = rand.nextFloat()
+            float platformX = rand.nextFloat()
                     * (WORLD_WIDTH - Platform.PLATFORM_WIDTH)
                     + Platform.PLATFORM_WIDTH / 2;
-
-            Platform platform = new Platform(type, x, newPlatformY);
-            platforms.add(platform);
-
             if (level < 15 && rand.nextFloat() > 0.9f
                     && type != Platform.PLATFORM_TYPE_MOVING) {
-                Spring spring = new Spring(platform.position.x,
-                        platform.position.y + Platform.PLATFORM_HEIGHT / 2
+                Spring spring = new Spring(platformX,
+                        newPlatformY + Platform.PLATFORM_HEIGHT / 2
                                 + Spring.SPRING_HEIGHT / 2);
                 springs.add(spring);
-            }
+                isSpringLoaded = true;
+            } else
+                isSpringLoaded = false;
 
-            if (isEnemyReadyToBeGenerated && level >= 15 && y > WORLD_HEIGHT / 4 && rand.nextFloat() > 0.9f - ((level/25f)-.35)) {
-                Squirrel squirrel = new Squirrel(platform.position.x
-                        + rand.nextFloat(), platform.position.y
-                        + Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * 2);
-                squirrel.setSQUIRREL_VELOCITY(.5f + level / 5 < 5f ? .5f + level / 5 : 5f);
-                squirrels.add(squirrel);
-                isEnemyReadyToBeGenerated = false;
-            } else {
-                isEnemyReadyToBeGenerated = true;
-            }
+            Platform platform = new Platform(type, platformX, newPlatformY, isSpringLoaded);
+            platform.setPlatformVelocity(level / 25f < 5f ? level / 25f : 5f);
+            platforms.add(platform);
 
-            if (rand.nextFloat() > 0.7f) {
-                Coin coin = new Coin(platform.position.x + rand.nextFloat(),
-                        newPlatformY + Coin.COIN_HEIGHT
-                                + rand.nextFloat() * 3);
-                coins.add(coin);
-            }
 
             y += (maxJumpHeight - 0.5f);
             y -= rand.nextFloat() * (maxJumpHeight / 3);
@@ -112,6 +98,44 @@ public class World {
                 newPlatformY = y;
             }
         }
+/*
+        if (isEnemyReadyToBeGenerated && level >= 15 && y > WORLD_HEIGHT / 8 && rand.nextFloat() > 0.9f - ((level / 25f) - .35)) {
+            Squirrel squirrel = new Squirrel(platform.position.x
+                    + rand.nextFloat(), platform.position.y
+                    + Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * 2);
+            squirrel.setSQUIRREL_VELOCITY(level/7.5f < 5f ? level/7.5f : 5f);
+            squirrels.add(squirrel);
+            isEnemyReadyToBeGenerated = false;
+        } else {
+            isEnemyReadyToBeGenerated = true;
+        }*/
+        if (level >= 15) {
+            int enemyQuotient = (platforms.size() - 1) / (level - 10 - 1);
+            int enemyRemainder = (platforms.size() - 1) % (level - 10 - 1);
+
+            int enemyIndex = 10;
+            do {
+
+                Squirrel squirrel = new Squirrel(platforms.get(enemyIndex).position.x
+                        + rand.nextFloat(), platforms.get(enemyIndex).position.y
+                        + Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * 2);
+                squirrel.setSQUIRREL_VELOCITY(level / 7.5f < 5f ? level / 7.5f : 5f);
+                squirrels.add(squirrel);
+
+            } while ((enemyIndex += enemyQuotient + (enemyRemainder-- > 0 ? 1 : 0)) < platforms.size());
+        }
+
+        int quotient = (platforms.size() - 1) / (10 - 1);
+        int remainder = (platforms.size() - 1) % (10 - 1);
+
+        int index = 0;
+        do {
+
+            Coin coin = new Coin(platforms.get(index).position.x, platforms.get(index).position.y + Coin.COIN_HEIGHT);
+            coins.add(coin);
+
+        } while ((index += quotient + (remainder-- > 0 ? 1 : 0)) < platforms.size());
+
 
         castle = new Castle(WORLD_WIDTH / 2, newPlatformY + 2.5f);
     }
@@ -184,7 +208,7 @@ public class World {
                         .overlapRectangles(player.bounds, platform.bounds)) {
                     player.hitPlatform();
                     listener.jump();
-                    if (level >= 5 && rand.nextFloat() > 0.9f - (level/25f)) {
+                    if (level >= 5 && rand.nextFloat() > 0.9f - (level / 25f) && platform.position.y > 10 && !platform.isPlatformSpringLoaded) {
                         platform.pulverize();
                     }
                     break;
@@ -212,7 +236,7 @@ public class World {
                 coins.remove(coin);
                 len = coins.size();
                 listener.coin();
-                score += Coin.COIN_SCORE;
+                levelScore += Coin.COIN_SCORE;
             }
 
         }
@@ -235,6 +259,8 @@ public class World {
     private void checkCastleCollisions() {
         if (OverlapTester.overlapRectangles(castle.bounds, player.bounds)) {
             state = WORLD_STATE_NEXT_LEVEL;
+            //if(coins.isEmpty())
+            score += levelScore;
             level++;
         }
     }
@@ -243,5 +269,9 @@ public class World {
         if (heightSoFar - 7.5f > player.position.y) {
             state = WORLD_STATE_GAME_OVER;
         }
+    }
+
+    public int getCoins() {
+        return coins.size();
     }
 }
