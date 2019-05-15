@@ -67,7 +67,6 @@ public abstract class GLGame extends Activity implements Game, Renderer, View.On
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        RelativeLayout layoutMain = findViewById(R.id.layoutMain);
 
         // Create the adView
         // Please replace MY_BANNER_UNIT_ID with your AdMob Publisher ID
@@ -87,25 +86,24 @@ public abstract class GLGame extends Activity implements Game, Renderer, View.On
             }
         });
 
-      //  RelativeLayout.LayoutParams layoutParams =
-        //        (RelativeLayout.LayoutParams)layoutMain.getLayoutParams();
-        //layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        //layoutMain.setLayoutParams(layoutParams);
-
-
-        // Initiate a generic request to load it with an ad
-
-        RelativeLayout layout1 = findViewById(R.id.layout1);
-        layout1.setOnTouchListener(this);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         glView = new GLSurfaceView(this);
         glView.setRenderer(this);
 
-        layoutMain.addView(adView);
+        RelativeLayout adLayout = findViewById(R.id.layoutMain);
+        LinearLayout gameLayout = findViewById(R.id.layout1);
+
+        RelativeLayout.LayoutParams adParams =
+                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT);
+        adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        adParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        adLayout.setOnTouchListener(this);
+        adLayout.addView(adView, adParams);
+        gameLayout.addView(glView);
         adView.loadAd(new AdRequest.Builder().addTestDevice(AD_UNIT_ID).build());
-        layout1.addView(glView);
 
         glGraphics = new GLGraphics(glView);
         fileIO = new AndroidFileIO(this);
