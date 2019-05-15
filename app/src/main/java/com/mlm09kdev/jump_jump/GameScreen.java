@@ -121,8 +121,8 @@ public class GameScreen extends GLScreen {
         }
 
         world.update(deltaTime, game.getInput().getAccelX());
-        if(world.score != lastScore) {
-            lastScore = world.score;
+        if(world.score != lastScore|| world.levelScore+world.score != lastScore) {
+            lastScore = world.levelScore+world.score;
             scoreString = "" + lastScore;
         }
         if(world.state == World.WORLD_STATE_NEXT_LEVEL) {
@@ -130,11 +130,11 @@ public class GameScreen extends GLScreen {
         }
         if(world.state == World.WORLD_STATE_GAME_OVER) {
             state = GAME_OVER;
-            if(lastScore >= Settings.highscores[4])
-                scoreString = "new highscore: " + lastScore;
+            if(world.score >= Settings.highscores[4])
+                scoreString = "new highscore: " + world.score;
             else
-                scoreString = "score: " + lastScore;
-            Settings.addScore(lastScore);
+                scoreString = "score: " + world.score;
+            Settings.addScore(world.score);
             Settings.save(game.getFileIO());
         }
     }

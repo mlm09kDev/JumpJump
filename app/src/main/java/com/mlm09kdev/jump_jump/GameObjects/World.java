@@ -261,6 +261,7 @@ public class World {
             state = WORLD_STATE_NEXT_LEVEL;
             //if(coins.isEmpty())
             score += levelScore;
+            levelScore=0;
             level++;
         }
     }
