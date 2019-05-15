@@ -5,12 +5,18 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.mlm09kdev.jump_jump.Framework.Audio;
 import com.mlm09kdev.jump_jump.Framework.FileIO;
 import com.mlm09kdev.jump_jump.Framework.Game;
@@ -23,6 +29,7 @@ import com.mlm09kdev.jump_jump.Framework.Screen;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public abstract class AndroidGame extends Activity implements Game {
+    private static final String AD_UNIT_ID = "test";
     AndroidFastRenderView renderView;
     Graphics graphics;
     Audio audio;
@@ -30,6 +37,8 @@ public abstract class AndroidGame extends Activity implements Game {
     FileIO fileIO;
     Screen screen;
     WakeLock wakeLock;
+    private AdView adView;
+    private String TestDeviceID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +68,9 @@ public abstract class AndroidGame extends Activity implements Game {
         setContentView(renderView);
         
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "GLGame");
+        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "GLGame:myWakelockTag");
+
+
     }
 
     @Override

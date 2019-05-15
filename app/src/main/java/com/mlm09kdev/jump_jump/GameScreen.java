@@ -1,5 +1,7 @@
 package com.mlm09kdev.jump_jump;
 
+import android.util.Log;
+
 import com.mlm09kdev.jump_jump.Framework.GL.Camera2D;
 import com.mlm09kdev.jump_jump.Framework.GL.SpriteBatcher;
 import com.mlm09kdev.jump_jump.Framework.Game;
@@ -13,6 +15,8 @@ import com.mlm09kdev.jump_jump.GameObjects.World;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import static com.mlm09kdev.jump_jump.Framework.Impl.GLGame.mInterstitialAd;
 
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
@@ -36,6 +40,7 @@ public class GameScreen extends GLScreen {
     Rectangle quitBounds;
     int lastScore;
     String scoreString;
+    private boolean isAdReadytoLoad = false;
 
     public GameScreen(Game game) {
         super(game);
@@ -62,10 +67,10 @@ public class GameScreen extends GLScreen {
         };
         world = new World(worldListener);
         renderer = new WorldRenderer(glGraphics, batcher, world);
-        pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
+        pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
         resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
         quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
-        if(world.level > 1)
+        if (world.level > 1)
             lastScore = world.score;
         else
             lastScore = 0;
@@ -74,10 +79,10 @@ public class GameScreen extends GLScreen {
 
     @Override
     public void update(float deltaTime) {
-        if(deltaTime > 0.1f)
+        if (deltaTime > 0.1f)
             deltaTime = 0.1f;
 
-        switch(state) {
+        switch (state) {
             case GAME_READY:
                 updateReady();
                 break;
@@ -97,23 +102,24 @@ public class GameScreen extends GLScreen {
     }
 
     private void updateReady() {
-        if(game.getInput().getTouchEvents().size() > 0) {
+        if (game.getInput().getTouchEvents().size() > 0) {
             state = GAME_RUNNING;
+            isAdReadytoLoad = true;
         }
     }
 
     private void updateRunning(float deltaTime) {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         int len = touchEvents.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
-            if(event.type != TouchEvent.TOUCH_UP)
+            if (event.type != TouchEvent.TOUCH_UP)
                 continue;
 
             touchPoint.set(event.x, event.y);
             guiCam.touchToWorld(touchPoint);
 
-            if(OverlapTester.pointInRectangle(pauseBounds, touchPoint)) {
+            if (OverlapTester.pointInRectangle(pauseBounds, touchPoint)) {
                 Assets.playSound(Assets.clickSound);
                 state = GAME_PAUSED;
                 return;
@@ -121,16 +127,16 @@ public class GameScreen extends GLScreen {
         }
 
         world.update(deltaTime, game.getInput().getAccelX());
-        if(world.score != lastScore|| world.levelScore+world.score != lastScore) {
-            lastScore = world.levelScore+world.score;
+        if (world.score != lastScore || world.levelScore + world.score != lastScore) {
+            lastScore = world.levelScore + world.score;
             scoreString = "" + lastScore;
         }
-        if(world.state == World.WORLD_STATE_NEXT_LEVEL) {
+        if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
             state = GAME_LEVEL_END;
         }
-        if(world.state == World.WORLD_STATE_GAME_OVER) {
+        if (world.state == World.WORLD_STATE_GAME_OVER) {
             state = GAME_OVER;
-            if(world.score >= Settings.highscores[4])
+            if (world.score >= Settings.highscores[4])
                 scoreString = "new highscore: " + world.score;
             else
                 scoreString = "score: " + world.score;
@@ -142,21 +148,21 @@ public class GameScreen extends GLScreen {
     private void updatePaused() {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         int len = touchEvents.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
-            if(event.type != TouchEvent.TOUCH_UP)
+            if (event.type != TouchEvent.TOUCH_UP)
                 continue;
 
             touchPoint.set(event.x, event.y);
             guiCam.touchToWorld(touchPoint);
 
-            if(OverlapTester.pointInRectangle(resumeBounds, touchPoint)) {
+            if (OverlapTester.pointInRectangle(resumeBounds, touchPoint)) {
                 Assets.playSound(Assets.clickSound);
                 state = GAME_RUNNING;
                 return;
             }
 
-            if(OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
+            if (OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
                 Assets.playSound(Assets.clickSound);
                 game.setScreen(new MainMenuScreen(game));
                 return;
@@ -168,25 +174,32 @@ public class GameScreen extends GLScreen {
     private void updateLevelEnd() {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         int len = touchEvents.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
-            if(event.type != TouchEvent.TOUCH_UP)
+            if (event.type != TouchEvent.TOUCH_UP)
                 continue;
             world = new World(worldListener);
             renderer = new WorldRenderer(glGraphics, batcher, world);
             world.score = lastScore;
             state = GAME_READY;
+
+
         }
+
     }
 
     private void updateGameOver() {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         int len = touchEvents.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
-            if(event.type != TouchEvent.TOUCH_UP)
+            if (event.type != TouchEvent.TOUCH_UP)
                 continue;
             game.setScreen(new MainMenuScreen(game));
+        }
+        if (isAdReadytoLoad) {
+            glGame.displayInterstitial();
+            isAdReadytoLoad = false;
         }
     }
 
@@ -202,7 +215,7 @@ public class GameScreen extends GLScreen {
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
         batcher.beginBatch(Assets.items);
-        switch(state) {
+        switch (state) {
             case GAME_READY:
                 presentReady();
                 break;
@@ -224,7 +237,7 @@ public class GameScreen extends GLScreen {
     }
 
     private void presentReady() {
-        String topText = "Level "+ World.level;
+        String topText = "Level " + World.level;
         float topWidth = Assets.font.glyphWidth * topText.length();
         Assets.font.drawText(batcher, topText, 160 - topWidth / 2, 480 - 40);
         batcher.drawSprite(160, 240, 192, 32, Assets.ready);
@@ -232,16 +245,16 @@ public class GameScreen extends GLScreen {
 
     private void presentRunning() {
         batcher.drawSprite(320 - 32, 480 - 32, 64, 64, Assets.pause);
-        Assets.font.drawText(batcher, scoreString, 16, 480-20);
+        Assets.font.drawText(batcher, scoreString, 16, 480 - 20);
     }
 
     private void presentPaused() {
         batcher.drawSprite(160, 240, 192, 96, Assets.pauseMenu);
-        Assets.font.drawText(batcher, scoreString, 16, 480-20);
+        Assets.font.drawText(batcher, scoreString, 16, 480 - 20);
     }
 
     private void presentLevelEnd() {
-        String topText = 10 - world.getCoins()+"/10 Coins Gathered";
+        String topText = 10 - world.getCoins() + "/10 Coins Gathered";
         float topWidth = Assets.font.glyphWidth * topText.length();
         Assets.font.drawText(batcher, topText, 160 - topWidth / 2, 480 - 40);
 
@@ -250,12 +263,12 @@ public class GameScreen extends GLScreen {
     private void presentGameOver() {
         batcher.drawSprite(160, 240, 160, 96, Assets.gameOver);
         float scoreWidth = Assets.font.glyphWidth * scoreString.length();
-        Assets.font.drawText(batcher, scoreString, 160 - scoreWidth / 2, 480-20);
+        Assets.font.drawText(batcher, scoreString, 160 - scoreWidth / 2, 480 - 20);
     }
 
     @Override
     public void pause() {
-        if(state == GAME_RUNNING)
+        if (state == GAME_RUNNING)
             state = GAME_PAUSED;
     }
 

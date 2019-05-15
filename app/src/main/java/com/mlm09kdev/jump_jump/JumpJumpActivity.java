@@ -1,6 +1,8 @@
 package com.mlm09kdev.jump_jump;
 
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.mlm09kdev.jump_jump.Framework.Impl.GLGame;
 import com.mlm09kdev.jump_jump.Framework.Screen;
@@ -42,5 +44,10 @@ public class JumpJumpActivity extends GLGame {
         if (Settings.soundEnabled) {
         Assets.music.pause();
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
     }
 }
