@@ -239,31 +239,32 @@ public class GameScreen extends GLScreen {
     private void presentReady() {
         String topText = "Level " + World.level;
         float topWidth = Assets.font.glyphWidth * topText.length();
-        Assets.font.drawText(batcher, topText, 160 - topWidth / 2, 480 - 40);
+        Assets.font.drawText(batcher, topText, 160 - topWidth / 2, 400);
+
         batcher.drawSprite(160, 240, 192, 32, Assets.ready);
     }
 
     private void presentRunning() {
-        batcher.drawSprite(320 - 32, 480 - 32, 64, 64, Assets.pause);
-        Assets.font.drawText(batcher, scoreString, 16, 480 - 20);
+        batcher.drawSprite(320 - 32, 480 - 60, 64, 64, Assets.pause);
+        Assets.font.drawText(batcher, scoreString, 16, 480 - 60);
     }
 
     private void presentPaused() {
-        batcher.drawSprite(160, 240, 192, 96, Assets.pauseMenu);
-        Assets.font.drawText(batcher, scoreString, 16, 480 - 20);
+        batcher.drawSprite(160, 220, 192, 96, Assets.pauseMenu);
+        Assets.font.drawText(batcher, scoreString, 16, 480 - 60);
     }
 
     private void presentLevelEnd() {
         String topText = 10 - world.getCoins() + "/10 Coins Gathered";
         float topWidth = Assets.font.glyphWidth * topText.length();
-        Assets.font.drawText(batcher, topText, 160 - topWidth / 2, 480 - 40);
+        Assets.font.drawText(batcher, topText, 180 - topWidth / 2, 480 - 80);
 
     }
 
     private void presentGameOver() {
         batcher.drawSprite(160, 240, 160, 96, Assets.gameOver);
         float scoreWidth = Assets.font.glyphWidth * scoreString.length();
-        Assets.font.drawText(batcher, scoreString, 160 - scoreWidth / 2, 480 - 20);
+        Assets.font.drawText(batcher, scoreString, 160 - scoreWidth / 2, 480 - 60);
     }
 
     @Override

@@ -68,7 +68,7 @@ public class World {
         float newPlatformY = (maxJumpHeight - 0.5f) / 2;
         while (newPlatformY < WORLD_HEIGHT - WORLD_WIDTH / 2) {
             int type = 0;
-            if (level >= 10) {
+            if (level >= 15) {
                 type = rand.nextFloat() > level / 50f ? Platform.PLATFORM_TYPE_STATIC
                         : Platform.PLATFORM_TYPE_MOVING;
             }
@@ -109,7 +109,7 @@ public class World {
         } else {
             isEnemyReadyToBeGenerated = true;
         }*/
-        if (level >= 15) {
+        if (level >= 10) {
             int enemyQuotient = (platforms.size() - 1) / (level - 10 - 1);
             int enemyRemainder = (platforms.size() - 1) % (level - 10 - 1);
 
