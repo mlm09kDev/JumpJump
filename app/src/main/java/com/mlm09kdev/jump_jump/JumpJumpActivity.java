@@ -5,8 +5,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
 import com.mlm09kdev.jump_jump.Framework.Impl.GLGame;
@@ -23,8 +21,8 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class JumpJumpActivity extends GLGame {
     private static final int PERMISSIONS_REQUEST_CODE = 1;
-    String[] appPermission = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
-    Boolean firstTimeCreated = true;
+    private final String[] appPermission = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
+    private Boolean firstTimeCreated = true;
 
     @Override
     public Screen getStartScreen() {
@@ -59,11 +57,7 @@ public class JumpJumpActivity extends GLGame {
         if (Settings.soundEnabled) {
             Assets.music.pause();
         }
-    }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return false;
     }
 
     private boolean checkAndRequestPermissions() {
@@ -83,7 +77,7 @@ public class JumpJumpActivity extends GLGame {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 1: {
 
@@ -98,7 +92,6 @@ public class JumpJumpActivity extends GLGame {
                     // functionality that depends on this permission.
                     Toast.makeText(this, "Permission denied to read your External storage, save functionality disabled", Toast.LENGTH_SHORT).show();
                 }
-                return;
             }
             // other 'case' lines to check for other
             // permissions this app might request

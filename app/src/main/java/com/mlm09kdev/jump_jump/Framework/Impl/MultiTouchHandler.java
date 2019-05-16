@@ -15,15 +15,15 @@ import java.util.List;
 public class MultiTouchHandler implements TouchHandler {
     private static final int MAX_TOUCHPOINTS = 10;
 	
-    boolean[] isTouched = new boolean[MAX_TOUCHPOINTS];
-    int[] touchX = new int[MAX_TOUCHPOINTS];
-    int[] touchY = new int[MAX_TOUCHPOINTS];
-    int[] id = new int[MAX_TOUCHPOINTS];
-    Pool<Input.TouchEvent> touchEventPool;
-    List<Input.TouchEvent> touchEvents = new ArrayList<Input.TouchEvent>();
-    List<Input.TouchEvent> touchEventsBuffer = new ArrayList<Input.TouchEvent>();
-    float scaleX;
-    float scaleY;
+    private final boolean[] isTouched = new boolean[MAX_TOUCHPOINTS];
+    private final int[] touchX = new int[MAX_TOUCHPOINTS];
+    private final int[] touchY = new int[MAX_TOUCHPOINTS];
+    private final int[] id = new int[MAX_TOUCHPOINTS];
+    private final Pool<Input.TouchEvent> touchEventPool;
+    private final List<Input.TouchEvent> touchEvents = new ArrayList<>();
+    private final List<Input.TouchEvent> touchEventsBuffer = new ArrayList<>();
+    private final float scaleX;
+    private final float scaleY;
 
     public MultiTouchHandler(View view, float scaleX, float scaleY) {
         Pool.PoolObjectFactory<Input.TouchEvent> factory = new Pool.PoolObjectFactory<Input.TouchEvent>() {
@@ -31,7 +31,7 @@ public class MultiTouchHandler implements TouchHandler {
                 return new Input.TouchEvent();
             }
         };
-        touchEventPool = new Pool<Input.TouchEvent>(factory, 100);
+        touchEventPool = new Pool<>(factory, 100);
         view.setOnTouchListener(this);
 
         this.scaleX = scaleX;

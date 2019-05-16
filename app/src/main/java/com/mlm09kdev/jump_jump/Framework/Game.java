@@ -4,17 +4,17 @@ package com.mlm09kdev.jump_jump.Framework;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public interface Game {
-    public Input getInput();
+     Input getInput();
 
-    public FileIO getFileIO();
+     FileIO getFileIO();
 
-    public Graphics getGraphics();
+     Graphics getGraphics();
 
-    public Audio getAudio();
+     Audio getAudio();
 
-    public void setScreen(Screen screen);
+     void setScreen(Screen screen);
 
-    public Screen getCurrentScreen();
+     Screen getCurrentScreen();
 
-    public Screen getStartScreen();
+     Screen getStartScreen();
 }

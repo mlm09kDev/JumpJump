@@ -11,7 +11,7 @@ import com.mlm09kdev.jump_jump.Framework.Sound;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class Assets {
+class Assets {
     public static Texture background;
     public static TextureRegion backgroundRegion;
 
@@ -38,7 +38,6 @@ public class Assets {
     public static Font font;
 
     public static Texture test;
-    public static TextureRegion testRec;
 
     public static Music music;
     public static Sound jumpSound;
@@ -88,7 +87,7 @@ public class Assets {
                 new TextureRegion(items, 64, 192, 64, 16),
                 new TextureRegion(items, 64, 208, 64, 16));
 
-        testRec = new TextureRegion(items,370,446,142 ,66);
+        TextureRegion testRec = new TextureRegion(items, 370, 446, 142, 66);
 
         font = new Font(items, 224, 0, 16, 16, 20);
 

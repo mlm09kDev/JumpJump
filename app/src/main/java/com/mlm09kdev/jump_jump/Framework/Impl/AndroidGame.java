@@ -5,17 +5,12 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.mlm09kdev.jump_jump.Framework.Audio;
 import com.mlm09kdev.jump_jump.Framework.FileIO;
@@ -30,13 +25,13 @@ import com.mlm09kdev.jump_jump.Framework.Screen;
  */
 public abstract class AndroidGame extends Activity implements Game {
     private static final String AD_UNIT_ID = "test";
-    AndroidFastRenderView renderView;
-    Graphics graphics;
-    Audio audio;
-    Input input;
-    FileIO fileIO;
-    Screen screen;
-    WakeLock wakeLock;
+    private AndroidFastRenderView renderView;
+    private Graphics graphics;
+    private Audio audio;
+    private Input input;
+    private FileIO fileIO;
+    private Screen screen;
+    private WakeLock wakeLock;
     private AdView adView;
     private String TestDeviceID;
 
@@ -76,7 +71,7 @@ public abstract class AndroidGame extends Activity implements Game {
     @Override
     public void onResume() {
         super.onResume();
-        wakeLock.acquire();
+        wakeLock.acquire(1000);
         screen.resume();
         renderView.resume();
     }
@@ -84,7 +79,8 @@ public abstract class AndroidGame extends Activity implements Game {
     @Override
     public void onPause() {
         super.onPause();
-        wakeLock.release();
+        if (wakeLock.isHeld())
+            wakeLock.release();
         renderView.pause();
         screen.pause();
 

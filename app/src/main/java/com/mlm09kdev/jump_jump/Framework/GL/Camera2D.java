@@ -10,10 +10,10 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class Camera2D {
     public final Vector2 position;
-    public float zoom;
-    public final float frustumWidth;
-    public final float frustumHeight;
-    final GLGraphics glGraphics;
+    private final float zoom;
+    private final float frustumWidth;
+    private final float frustumHeight;
+    private final GLGraphics glGraphics;
 
     public Camera2D(GLGraphics glGraphics, float frustumWidth, float frustumHeight) {
         this.glGraphics = glGraphics;

@@ -22,8 +22,8 @@ public class World {
     }
 
     public static final float WORLD_WIDTH = 10;
-    public static final float WORLD_HEIGHT = 150;
-    public static final int WORLD_STATE_RUNNING = 0;
+    private static final float WORLD_HEIGHT = 150;
+    private static final int WORLD_STATE_RUNNING = 0;
     public static final int WORLD_STATE_NEXT_LEVEL = 1;
     public static final int WORLD_STATE_GAME_OVER = 2;
     public static final Vector2 gravity = new Vector2(0, -12);
@@ -36,11 +36,10 @@ public class World {
     public final List<Squirrel> squirrels;
     public final List<Coin> coins;
     public Castle castle;
-    public final WorldListener listener;
-    public final Random rand;
+    private final WorldListener listener;
+    private final Random rand;
 
-    private boolean isSpringLoaded;
-    public float heightSoFar;
+    private float heightSoFar;
     public static int score = 0;
     public int levelScore;
     public int state;
@@ -75,6 +74,7 @@ public class World {
             float platformX = rand.nextFloat()
                     * (WORLD_WIDTH - Platform.PLATFORM_WIDTH)
                     + Platform.PLATFORM_WIDTH / 2;
+            boolean isSpringLoaded;
             if (level < 15 && rand.nextFloat() > 0.9f
                     && type != Platform.PLATFORM_TYPE_MOVING) {
                 Spring spring = new Spring(platformX,

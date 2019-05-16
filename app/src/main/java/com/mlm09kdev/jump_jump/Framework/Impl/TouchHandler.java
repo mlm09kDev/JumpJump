@@ -11,12 +11,12 @@ import java.util.List;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public interface TouchHandler extends OnTouchListener {
-    public boolean isTouchDown(int pointer);
+interface TouchHandler extends OnTouchListener {
+    boolean isTouchDown(int pointer);
     
-    public int getTouchX(int pointer);
+    int getTouchX(int pointer);
     
-    public int getTouchY(int pointer);
+    int getTouchY(int pointer);
     
-    public List<Input.TouchEvent> getTouchEvents();
+    List<Input.TouchEvent> getTouchEvents();
 }

@@ -10,11 +10,11 @@ import android.view.SurfaceView;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class AndroidFastRenderView extends SurfaceView implements Runnable {
-    AndroidGame game;
-    Bitmap framebuffer;
-    Thread renderThread = null;
-    SurfaceHolder holder;
-    volatile boolean running = false;
+    private final AndroidGame game;
+    private final Bitmap framebuffer;
+    private Thread renderThread = null;
+    private final SurfaceHolder holder;
+    private volatile boolean running = false;
 
     public AndroidFastRenderView(AndroidGame game, Bitmap framebuffer) {
         super(game);

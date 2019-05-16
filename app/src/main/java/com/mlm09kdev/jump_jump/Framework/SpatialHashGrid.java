@@ -7,14 +7,14 @@ import java.util.List;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class SpatialHashGrid {
-    List<GameObject>[] dynamicCells;
-    List<GameObject>[] staticCells;
-    int cellsPerRow;
-    int cellsPerCol;
-    float cellSize;
-    int[] cellIds = new int[4];
-    List<GameObject> foundObjects;
+class SpatialHashGrid {
+    private final List<GameObject>[] dynamicCells;
+    private final List<GameObject>[] staticCells;
+    private final int cellsPerRow;
+    private final int cellsPerCol;
+    private final float cellSize;
+    private final int[] cellIds = new int[4];
+    private final List<GameObject> foundObjects;
 
     @SuppressWarnings("unchecked")
     public SpatialHashGrid(float worldWidth, float worldHeight, float cellSize) {
@@ -25,16 +25,16 @@ public class SpatialHashGrid {
         dynamicCells = new List[numCells];
         staticCells = new List[numCells];
         for(int i = 0; i < numCells; i++) {
-            dynamicCells[i] = new ArrayList<GameObject>(10);
-            staticCells[i] = new ArrayList<GameObject>(10);
+            dynamicCells[i] = new ArrayList<>(10);
+            staticCells[i] = new ArrayList<>(10);
         }
-        foundObjects = new ArrayList<GameObject>(10);
+        foundObjects = new ArrayList<>(10);
     }
 
     public void insertStaticObject(GameObject obj) {
         int[] cellIds = getCellIds(obj);
         int i = 0;
-        int cellId = -1;
+        int cellId;
         while(i <= 3 && (cellId = cellIds[i++]) != -1) {
             staticCells[cellId].add(obj);
         }
@@ -43,7 +43,7 @@ public class SpatialHashGrid {
     public void insertDynamicObject(GameObject obj) {
         int[] cellIds = getCellIds(obj);
         int i = 0;
-        int cellId = -1;
+        int cellId;
         while(i <= 3 && (cellId = cellIds[i++]) != -1) {
             dynamicCells[cellId].add(obj);
         }
@@ -52,7 +52,7 @@ public class SpatialHashGrid {
     public void removeObject(GameObject obj) {
         int[] cellIds = getCellIds(obj);
         int i = 0;
-        int cellId = -1;
+        int cellId;
         while(i <= 3 && (cellId = cellIds[i++]) != -1) {
             dynamicCells[cellId].remove(obj);
             staticCells[cellId].remove(obj);
@@ -61,8 +61,8 @@ public class SpatialHashGrid {
 
     public void clearDynamicCells(GameObject obj) {
         int len = dynamicCells.length;
-        for(int i = 0; i < len; i++) {
-            dynamicCells[i].clear();
+        for (List<GameObject> dynamicCell : dynamicCells) {
+            dynamicCell.clear();
         }
     }   
 
@@ -70,7 +70,7 @@ public class SpatialHashGrid {
         foundObjects.clear();
         int[] cellIds = getCellIds(obj);
         int i = 0;
-        int cellId = -1;
+        int cellId;
         while(i <= 3 && (cellId = cellIds[i++]) != -1) {
             int len = dynamicCells[cellId].size();
             for(int j = 0; j < len; j++) {
@@ -89,7 +89,7 @@ public class SpatialHashGrid {
         return foundObjects;
     }
 
-    public int[] getCellIds(GameObject obj) {
+    private int[] getCellIds(GameObject obj) {
         int x1 = (int)Math.floor(obj.bounds.lowerLeft.x / cellSize);
         int y1 = (int)Math.floor(obj.bounds.lowerLeft.y / cellSize);
         int x2 = (int)Math.floor((obj.bounds.lowerLeft.x + obj.bounds.width) / cellSize);

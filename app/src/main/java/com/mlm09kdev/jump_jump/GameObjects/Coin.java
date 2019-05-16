@@ -7,7 +7,7 @@ import com.mlm09kdev.jump_jump.Framework.GameObject;
  */
 public class Coin extends GameObject {
 
-    public static final float COIN_WIDTH = 0.5f;
+    private static final float COIN_WIDTH = 0.5f;
     public static final float COIN_HEIGHT = 0.8f;
     public static final int COIN_SCORE = 10;
 

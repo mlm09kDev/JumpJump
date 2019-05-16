@@ -13,8 +13,8 @@ import com.mlm09kdev.jump_jump.Framework.Music;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class AndroidMusic implements Music, OnCompletionListener {
-    MediaPlayer mediaPlayer;
-    boolean isPrepared = false;
+    private final MediaPlayer mediaPlayer;
+    private boolean isPrepared;
 
     public AndroidMusic(AssetFileDescriptor assetDescriptor) {
         mediaPlayer = new MediaPlayer();

@@ -4,9 +4,9 @@ package com.mlm09kdev.jump_jump.Framework.GL;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class TextureRegion {    
-    public final float u1, v1;
-    public final float u2, v2;
-    public final Texture texture;
+    final float u1, v1;
+    final float u2, v2;
+    private final Texture texture;
     
     public TextureRegion(Texture texture, float x, float y, float width, float height) {
         this.u1 = x / texture.width;

@@ -17,35 +17,35 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class MainMenuScreen extends GLScreen {
 
-    int screenWidth = 1080;
-    int screenHeight = 1794;
+    private final int screenWidth = 1080;
+    private final int screenHeight = 1794;
 
     int backgroundX = 540;
     int backgroundY = 897;
 
 
-    int logoX = 540;
-    int logoY = 1345;
-    int logoWidth = 800;
-    int logoHeight = 500;
+    private final int logoX = 540;
+    private final int logoY = 1345;
+    private final int logoWidth = 800;
+    private final int logoHeight = 500;
 
-    int mainMenuX = screenWidth/2;
-    int mainMenuY = screenWidth-300;
-    int mainMenuWidth = 800;
-    int mainMenuHeight = 498;
+    private final int mainMenuX = screenWidth/2;
+    private final int mainMenuY = screenWidth-300;
+    private final int mainMenuWidth = 800;
+    private final int mainMenuHeight = 498;
 
-    int soundIconXY = 64;
-    int SoundIconWidthHeight = 128;
+    private final int soundIconXY = 64;
+    private final int SoundIconWidthHeight = 128;
 
 
-    Camera2D guiCam;
-    SpriteBatcher batcher;
-    Rectangle soundBounds;
-    Rectangle playBounds;
-    Rectangle highscoresBounds;
-    Rectangle helpBounds;
-    Vector2 touchPoint;
-    Rectangle test;
+    private final Camera2D guiCam;
+    private final SpriteBatcher batcher;
+    private final Rectangle soundBounds;
+    private final Rectangle playBounds;
+    private final Rectangle highscoresBounds;
+    private final Rectangle helpBounds;
+    private final Vector2 touchPoint;
+    private final Rectangle test;
 
     public MainMenuScreen(Game game) {
         super(game);

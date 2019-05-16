@@ -20,9 +20,9 @@ import com.mlm09kdev.jump_jump.Framework.FileIO;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class AndroidFileIO implements FileIO {
-    Context context;
-    AssetManager assets;
-    String externalStoragePath;
+    private final Context context;
+    private final AssetManager assets;
+    private final String externalStoragePath;
 
     public AndroidFileIO(Context context) {
         this.context = context;

@@ -20,12 +20,12 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class HelpScreen3 extends GLScreen {
 
-    Camera2D guiCam;
-    SpriteBatcher batcher;
-    Rectangle nextBounds;
-    Vector2 touchPoint;
-    Texture helpImage;
-    TextureRegion helpRegion;
+    private final Camera2D guiCam;
+    private final SpriteBatcher batcher;
+    private final Rectangle nextBounds;
+    private final Vector2 touchPoint;
+    private Texture helpImage;
+    private TextureRegion helpRegion;
 
 
     public HelpScreen3(Game game) {

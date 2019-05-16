@@ -10,8 +10,8 @@ import com.mlm09kdev.jump_jump.Framework.Pixmap;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class AndroidPixmap implements Pixmap {
-    Bitmap bitmap;
-    Graphics.PixmapFormat format;
+    final Bitmap bitmap;
+    private final Graphics.PixmapFormat format;
     
     public AndroidPixmap(Bitmap bitmap, Graphics.PixmapFormat format) {
         this.bitmap = bitmap;

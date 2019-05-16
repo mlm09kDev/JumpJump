@@ -18,13 +18,13 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class WorldRenderer {
-    static final float FRUSTUM_WIDTH = 10;
-    static final float FRUSTUM_HEIGHT = 15;
-    GLGraphics glGraphics;
-    World world;
-    Camera2D cam;
-    SpriteBatcher batcher;
+class WorldRenderer {
+    private static final float FRUSTUM_WIDTH = 10;
+    private static final float FRUSTUM_HEIGHT = 15;
+    private final GLGraphics glGraphics;
+    private final World world;
+    private final Camera2D cam;
+    private final SpriteBatcher batcher;
 
     public WorldRenderer(GLGraphics glGraphics, SpriteBatcher batcher, World world) {
         this.glGraphics = glGraphics;
@@ -41,7 +41,7 @@ public class WorldRenderer {
         renderObjects();
     }
 
-    public void renderBackground() {
+    private void renderBackground() {
         batcher.beginBatch(Assets.background);
         batcher.drawSprite(cam.position.x, cam.position.y,
                 FRUSTUM_WIDTH, FRUSTUM_HEIGHT,
@@ -49,7 +49,7 @@ public class WorldRenderer {
         batcher.endBatch();
     }
 
-    public void renderObjects() {
+    private void renderObjects() {
         GL10 gl = glGraphics.getGL();
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);

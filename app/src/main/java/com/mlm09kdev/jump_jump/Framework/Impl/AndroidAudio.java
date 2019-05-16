@@ -16,8 +16,8 @@ import com.mlm09kdev.jump_jump.Framework.Sound;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class AndroidAudio implements Audio {
-    AssetManager assets;
-    SoundPool soundPool;
+    private final AssetManager assets;
+    private final SoundPool soundPool;
 
     public AndroidAudio(Activity activity) {
         activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);

@@ -1,20 +1,19 @@
 package com.mlm09kdev.jump_jump.GameObjects;
 
 import com.mlm09kdev.jump_jump.Framework.DynamicGameObject;
-import com.mlm09kdev.jump_jump.Framework.GameObject;
 
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class Squirrel extends DynamicGameObject {
-    public static final float SQUIRREL_WIDTH = 1;
+    private static final float SQUIRREL_WIDTH = 1;
     public static final float SQUIRREL_HEIGHT = 0.6f;
 
     public void setSQUIRREL_VELOCITY(float SQUIRREL_VELOCITY) {
         this.SQUIRREL_VELOCITY = SQUIRREL_VELOCITY;
     }
 
-    public float SQUIRREL_VELOCITY = 3f;
+    private float SQUIRREL_VELOCITY = 3f;
 
    public float stateTime = 0;
 

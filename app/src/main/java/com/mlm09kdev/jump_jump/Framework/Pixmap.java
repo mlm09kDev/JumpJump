@@ -6,11 +6,11 @@ import com.mlm09kdev.jump_jump.Framework.Graphics.PixmapFormat;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public interface Pixmap {
-    public int getWidth();
+     int getWidth();
 
-    public int getHeight();
+     int getHeight();
 
-    public PixmapFormat getFormat();
+     PixmapFormat getFormat();
 
-    public void dispose();
+     void dispose();
 }

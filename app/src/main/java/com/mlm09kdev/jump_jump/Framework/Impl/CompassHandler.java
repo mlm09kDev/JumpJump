@@ -9,10 +9,10 @@ import android.hardware.SensorManager;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class CompassHandler implements SensorEventListener {
-    float yaw;
-    float pitch;
-    float roll;
+class CompassHandler implements SensorEventListener {
+    private float yaw;
+    private float pitch;
+    private float roll;
 
     public CompassHandler(Context context) {
         SensorManager manager = (SensorManager) context

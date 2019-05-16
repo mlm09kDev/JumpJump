@@ -1,7 +1,5 @@
 package com.mlm09kdev.jump_jump;
 
-import android.util.Log;
-
 import com.mlm09kdev.jump_jump.Framework.GL.Camera2D;
 import com.mlm09kdev.jump_jump.Framework.GL.SpriteBatcher;
 import com.mlm09kdev.jump_jump.Framework.Game;
@@ -16,30 +14,28 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import static com.mlm09kdev.jump_jump.Framework.Impl.GLGame.mInterstitialAd;
-
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class GameScreen extends GLScreen {
-    static final int GAME_READY = 0;
-    static final int GAME_RUNNING = 1;
-    static final int GAME_PAUSED = 2;
-    static final int GAME_LEVEL_END = 3;
-    static final int GAME_OVER = 4;
+    private static final int GAME_READY = 0;
+    private static final int GAME_RUNNING = 1;
+    private static final int GAME_PAUSED = 2;
+    private static final int GAME_LEVEL_END = 3;
+    private static final int GAME_OVER = 4;
 
-    int state;
-    Camera2D guiCam;
-    Vector2 touchPoint;
-    SpriteBatcher batcher;
-    World world;
-    World.WorldListener worldListener;
-    WorldRenderer renderer;
-    Rectangle pauseBounds;
-    Rectangle resumeBounds;
-    Rectangle quitBounds;
-    int lastScore;
-    String scoreString;
+    private int state;
+    private final Camera2D guiCam;
+    private final Vector2 touchPoint;
+    private final SpriteBatcher batcher;
+    private World world;
+    private final World.WorldListener worldListener;
+    private WorldRenderer renderer;
+    private final Rectangle pauseBounds;
+    private final Rectangle resumeBounds;
+    private final Rectangle quitBounds;
+    private int lastScore;
+    private String scoreString;
     private boolean isAdReadytoLoad = false;
 
     public GameScreen(Game game) {
@@ -70,11 +66,11 @@ public class GameScreen extends GLScreen {
         pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
         resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
         quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
-        if (world.level > 1)
-            lastScore = world.score;
+        if (World.level > 1)
+            lastScore = World.score;
         else
             lastScore = 0;
-        scoreString = "score: " + world.score;
+        scoreString = "score: " + World.score;
     }
 
     @Override
@@ -127,8 +123,8 @@ public class GameScreen extends GLScreen {
         }
 
         world.update(deltaTime, game.getInput().getAccelX());
-        if (world.score != lastScore || world.levelScore + world.score != lastScore) {
-            lastScore = world.levelScore + world.score;
+        if (World.score != lastScore || world.levelScore + World.score != lastScore) {
+            lastScore = world.levelScore + World.score;
             scoreString = "" + lastScore;
         }
         if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
@@ -136,11 +132,11 @@ public class GameScreen extends GLScreen {
         }
         if (world.state == World.WORLD_STATE_GAME_OVER) {
             state = GAME_OVER;
-            if (world.score >= Settings.highscores[4])
-                scoreString = "new highscore: " + world.score;
+            if (World.score >= Settings.highscores[4])
+                scoreString = "new highscore: " + World.score;
             else
-                scoreString = "score: " + world.score;
-            Settings.addScore(world.score);
+                scoreString = "score: " + World.score;
+            Settings.addScore(World.score);
             Settings.save(game.getFileIO());
         }
     }
@@ -180,7 +176,7 @@ public class GameScreen extends GLScreen {
                 continue;
             world = new World(worldListener);
             renderer = new WorldRenderer(glGraphics, batcher, world);
-            world.score = lastScore;
+            World.score = lastScore;
             state = GAME_READY;
 
 

@@ -5,9 +5,9 @@ import android.util.Log;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class FPSCounter {
-    long startTime = System.nanoTime();
-    int frames = 0;
+class FPSCounter {
+    private long startTime = System.nanoTime();
+    private int frames = 0;
     
     public void logFrame() {
         frames++;

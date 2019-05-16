@@ -11,8 +11,8 @@ public class Player extends DynamicGameObject {
     public static final int PLAYER_STATE_HIT = 2;
     public static final float PLAYER_JUMP_VELOCITY = 10;
     public static final float PLAYER_MOVE_VELOCITY = 20;
-    public static final float PLAYER_WIDTH = 0.8f;
-    public static final float PLAYER_HEIGHT = 0.8f;
+    private static final float PLAYER_WIDTH = 0.8f;
+    private static final float PLAYER_HEIGHT = 0.8f;
 
     public int state;
     public float stateTime;

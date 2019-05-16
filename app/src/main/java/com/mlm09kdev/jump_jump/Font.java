@@ -7,12 +7,12 @@ import com.mlm09kdev.jump_jump.Framework.GL.TextureRegion;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class Font {
-    public final Texture texture;
-    public final int glyphWidth;
-    public final int glyphHeight;
+class Font {
+    private final Texture texture;
+    private final int glyphWidth;
+    private final int glyphHeight;
     private final int totalGlyphs = 96;
-    public final TextureRegion[] glyphs = new TextureRegion[totalGlyphs];
+    private final TextureRegion[] glyphs = new TextureRegion[totalGlyphs];
 
     public Font(Texture texture, int offsetX, int offsetY, int glyphPerRow, int glyphWidth, int glyphHeight){
         this.texture = texture;

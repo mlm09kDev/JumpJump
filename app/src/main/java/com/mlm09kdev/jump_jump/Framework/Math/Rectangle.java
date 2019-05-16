@@ -5,7 +5,8 @@ package com.mlm09kdev.jump_jump.Framework.Math;
  */
 public class Rectangle {
     public final Vector2 lowerLeft;
-    public float width, height;
+    public final float width;
+    public final float height;
     
     public Rectangle(float x, float y, float width, float height) {
         this.lowerLeft = new Vector2(x,y);

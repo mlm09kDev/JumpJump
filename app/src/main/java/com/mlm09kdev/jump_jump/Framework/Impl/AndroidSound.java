@@ -8,8 +8,8 @@ import com.mlm09kdev.jump_jump.Framework.Sound;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class AndroidSound implements Sound {
-    int soundId;
-    SoundPool soundPool;
+    private final int soundId;
+    private final SoundPool soundPool;
 
     public AndroidSound(SoundPool soundPool, int soundId) {
         this.soundId = soundId;

@@ -6,7 +6,7 @@ package com.mlm09kdev.jump_jump.Framework;
 public abstract class Screen {
     protected final Game game;
 
-    public Screen(Game game) {
+    protected Screen(Game game) {
         this.game = game;
     }
 

@@ -12,10 +12,10 @@ import java.io.OutputStreamWriter;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class Settings {
+class Settings {
     public static boolean soundEnabled = false;
     public final static int[] highscores = new int[] { 100, 80, 50, 30, 10 };
-    public final static String file = ".jump_jump_settings.txt";
+    private final static String file = ".jump_jump_settings.txt";
 
     public static void load(FileIO files) {
         BufferedReader in = null;
@@ -73,8 +73,7 @@ public class Settings {
     public static void addScore(int score) {
         for (int i = 0; i < 5; i++) {
             if (highscores[i] < score) {
-                for (int j = 4; j > i; j--)
-                    highscores[j] = highscores[j - 1];
+                System.arraycopy(highscores, i, highscores, i + 1, 4 - i);
                 highscores[i] = score;
                 break;
             }

@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class KeyboardHandler implements OnKeyListener {
-    boolean[] pressedKeys = new boolean[128];
-    Pool<Input.KeyEvent> keyEventPool;
-    List<Input.KeyEvent> keyEventsBuffer = new ArrayList<Input.KeyEvent>();
-    List<Input.KeyEvent> keyEvents = new ArrayList<Input.KeyEvent>();
+class KeyboardHandler implements OnKeyListener {
+    private final boolean[] pressedKeys = new boolean[128];
+    private final Pool<Input.KeyEvent> keyEventPool;
+    private final List<Input.KeyEvent> keyEventsBuffer = new ArrayList<>();
+    private final List<Input.KeyEvent> keyEvents = new ArrayList<>();
     
     public KeyboardHandler(View view) {
         Pool.PoolObjectFactory<Input.KeyEvent> factory = new Pool.PoolObjectFactory<Input.KeyEvent>() {
@@ -25,7 +25,7 @@ public class KeyboardHandler implements OnKeyListener {
                 return new Input.KeyEvent();
             }
         };
-        keyEventPool = new Pool<Input.KeyEvent>(factory, 100);
+        keyEventPool = new Pool<>(factory, 100);
         view.setOnKeyListener(this);
         view.setFocusableInTouchMode(true);
         view.requestFocus();

@@ -8,8 +8,8 @@ import android.opengl.GLSurfaceView;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class GLGraphics {
-    GLSurfaceView glView;
-    GL10 gl;
+    private final GLSurfaceView glView;
+    private GL10 gl;
     
     GLGraphics(GLSurfaceView glView) {
         this.glView = glView;

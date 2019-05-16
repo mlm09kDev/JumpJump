@@ -18,12 +18,12 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class HighScoreScreen extends GLScreen {
 
-    Camera2D guiCam;
-    SpriteBatcher batcher;
-    Rectangle backBounds;
-    Vector2 touchPoint;
-    String[] highScores;
-    float xOffset = 0;
+    private final Camera2D guiCam;
+    private final SpriteBatcher batcher;
+    private final Rectangle backBounds;
+    private final Vector2 touchPoint;
+    private final String[] highScores;
+    private float xOffset = 0;
 
     public HighScoreScreen(Game game) {
         super(game);

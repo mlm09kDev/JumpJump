@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -35,7 +34,7 @@ import com.mlm09kdev.jump_jump.R;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public abstract class GLGame extends Activity implements Game, Renderer, View.OnTouchListener {
+public abstract class GLGame extends Activity implements Game, Renderer {
 
     private static final String AD_UNIT_ID = AdRequest.DEVICE_ID_EMULATOR;
     private static final String TAG = "GLGame";
@@ -48,18 +47,18 @@ public abstract class GLGame extends Activity implements Game, Renderer, View.On
         Idle
     }
 
-    GLSurfaceView glView;
-    GLGraphics glGraphics;
-    Audio audio;
-    Input input;
-    FileIO fileIO;
-    Screen screen;
-    GLGameState state = GLGameState.Initialized;
-    Object stateChanged = new Object();
-    long startTime = System.nanoTime();
-    WakeLock wakeLock;
+    private GLSurfaceView glView;
+    private GLGraphics glGraphics;
+    private Audio audio;
+    private Input input;
+    private FileIO fileIO;
+    private Screen screen;
+    private GLGameState state = GLGameState.Initialized;
+    private final Object stateChanged = new Object();
+    private long startTime = System.nanoTime();
+    private WakeLock wakeLock;
     private AdView adView;
-    public static InterstitialAd mInterstitialAd;
+    private static InterstitialAd mInterstitialAd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,8 +99,7 @@ public abstract class GLGame extends Activity implements Game, Renderer, View.On
         adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         adParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        adLayout.setOnTouchListener(this);
-      //  adLayout.addView(adView, adParams);
+        adLayout.addView(adView, adParams);
         gameLayout.addView(glView);
         adView.loadAd(new AdRequest.Builder().addTestDevice(AD_UNIT_ID).build());
 
@@ -119,7 +117,7 @@ public abstract class GLGame extends Activity implements Game, Renderer, View.On
     public void onResume() {
         super.onResume();
         glView.onResume();
-        wakeLock.acquire();
+        wakeLock.acquire(1000);
     }
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -138,7 +136,7 @@ public abstract class GLGame extends Activity implements Game, Renderer, View.On
     }
 
     public void onDrawFrame(GL10 gl) {
-        GLGameState state = null;
+        GLGameState state;
 
         synchronized (stateChanged) {
             state = this.state;
@@ -182,10 +180,12 @@ public abstract class GLGame extends Activity implements Game, Renderer, View.On
                     stateChanged.wait();
                     break;
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
-        wakeLock.release();
+        if (wakeLock.isHeld())
+            wakeLock.release();
         glView.onPause();
         super.onPause();
     }

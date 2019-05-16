@@ -1,7 +1,7 @@
 package com.mlm09kdev.jump_jump.Framework.GL;
 
 import javax.microedition.khronos.opengles.GL10;
-import android.util.FloatMath;
+
 import com.mlm09kdev.jump_jump.Framework.Impl.GLGraphics;
 import com.mlm09kdev.jump_jump.Framework.Math.Vector2;
 
@@ -10,10 +10,10 @@ import com.mlm09kdev.jump_jump.Framework.Math.Vector2;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class SpriteBatcher {
-    final float[] verticesBuffer;
-    int bufferIndex;
-    final Vertices vertices;
-    int numSprites;
+    private final float[] verticesBuffer;
+    private int bufferIndex;
+    private final Vertices vertices;
+    private int numSprites;
 
     public SpriteBatcher(GLGraphics glGraphics, int maxSprites) {
         this.verticesBuffer = new float[maxSprites * 4 * 4];
@@ -25,12 +25,12 @@ public class SpriteBatcher {
         int len = indices.length;
         short j = 0;
         for (int i = 0; i < len; i += 6, j += 4) {
-            indices[i + 0] = (short) (j + 0);
+            indices[i] = j;
             indices[i + 1] = (short) (j + 1);
             indices[i + 2] = (short) (j + 2);
             indices[i + 3] = (short) (j + 2);
             indices[i + 4] = (short) (j + 3);
-            indices[i + 5] = (short) (j + 0);
+            indices[i + 5] = j;
         }
         vertices.setIndices(indices, 0, indices.length);
     }

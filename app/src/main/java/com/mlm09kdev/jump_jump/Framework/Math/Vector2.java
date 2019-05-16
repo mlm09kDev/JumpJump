@@ -5,8 +5,8 @@ package com.mlm09kdev.jump_jump.Framework.Math;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class Vector2 {
-    public static float TO_RADIANS = (1 / 180.0f) * (float) Math.PI;
-    public static float TO_DEGREES = (1 / (float) Math.PI) * 180;
+    public static final float TO_RADIANS = (1 / 180.0f) * (float) Math.PI;
+    private static final float TO_DEGREES = (1 / (float) Math.PI) * 180;
     public float x, y;
 
     public Vector2() {
@@ -68,7 +68,7 @@ public class Vector2 {
         return this;
     }
 
-    public float len() {
+    private float len() {
         return (float)Math.sqrt(x * x + y * y);
     }
 

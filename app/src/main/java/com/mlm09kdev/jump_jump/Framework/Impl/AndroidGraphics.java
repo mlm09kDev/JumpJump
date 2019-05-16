@@ -21,12 +21,12 @@ import com.mlm09kdev.jump_jump.Framework.Pixmap;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class AndroidGraphics implements Graphics {
-    AssetManager assets;
-    Bitmap frameBuffer;
-    Canvas canvas;
-    Paint paint;
-    Rect srcRect = new Rect();
-    Rect dstRect = new Rect();
+    private final AssetManager assets;
+    private final Bitmap frameBuffer;
+    private final Canvas canvas;
+    private final Paint paint;
+    private final Rect srcRect = new Rect();
+    private final Rect dstRect = new Rect();
 
     public AndroidGraphics(AssetManager assets, Bitmap frameBuffer) {
         this.assets = assets;
@@ -36,7 +36,7 @@ public class AndroidGraphics implements Graphics {
     }
 
     public Pixmap newPixmap(String fileName, PixmapFormat format) {
-        Config config = null;
+        Config config;
         if (format == PixmapFormat.RGB565)
             config = Config.RGB_565;
         else if (format == PixmapFormat.ARGB4444)
@@ -48,7 +48,7 @@ public class AndroidGraphics implements Graphics {
         options.inPreferredConfig = config;
 
         InputStream in = null;
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         try {
             in = assets.open(fileName);
             bitmap = BitmapFactory.decodeStream(in);
@@ -63,6 +63,7 @@ public class AndroidGraphics implements Graphics {
                 try {
                     in.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }

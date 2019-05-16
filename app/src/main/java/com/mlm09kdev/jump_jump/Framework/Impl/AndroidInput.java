@@ -13,17 +13,14 @@ import com.mlm09kdev.jump_jump.Framework.Input;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class AndroidInput implements Input {
-    AccelerometerHandler accelHandler;
-    KeyboardHandler keyHandler;
-    TouchHandler touchHandler;
+    private final AccelerometerHandler accelHandler;
+    private final KeyboardHandler keyHandler;
+    private final TouchHandler touchHandler;
 
     public AndroidInput(Context context, View view, float scaleX, float scaleY) {
         accelHandler = new AccelerometerHandler(context);
-        keyHandler = new KeyboardHandler(view);               
-        if (Integer.parseInt(VERSION.SDK) < 5) 
-            touchHandler = new SingleTouchHandler(view, scaleX, scaleY);
-        else
-            touchHandler = new MultiTouchHandler(view, scaleX, scaleY);        
+        keyHandler = new KeyboardHandler(view);
+        touchHandler = new MultiTouchHandler(view, scaleX, scaleY);
     }
 
     public boolean isKeyPressed(int keyCode) {

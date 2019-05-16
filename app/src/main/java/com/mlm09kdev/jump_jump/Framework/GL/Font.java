@@ -4,10 +4,10 @@ package com.mlm09kdev.jump_jump.Framework.GL;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class Font {
-    public final Texture texture;
+    private final Texture texture;
     public final int glyphWidth;
     public final int glyphHeight;
-    public final TextureRegion[] glyphs = new TextureRegion[96];   
+    private final TextureRegion[] glyphs = new TextureRegion[96];
 
     public Font(Texture texture, 
             int offsetX, int offsetY,

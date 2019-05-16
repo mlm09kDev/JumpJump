@@ -9,7 +9,7 @@ import android.hardware.SensorManager;
 /**
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
-public class AccelerometerHandler implements SensorEventListener {
+class AccelerometerHandler implements SensorEventListener {
     float accelX;
     float accelY;
     float accelZ;
