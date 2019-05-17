@@ -16,6 +16,7 @@ class Assets {
     public static TextureRegion backgroundRegion;
 
     public static Texture items;
+    public static Texture fontsTexture;
     public static TextureRegion mainMenu;
     public static TextureRegion pauseMenu;
     public static TextureRegion ready;
@@ -51,45 +52,48 @@ class Assets {
         backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
 
 
-        items = new Texture(game, "items.png");
-        mainMenu = new TextureRegion(items, 0, 224, 300, 110);
-        pauseMenu = new TextureRegion(items, 224, 128, 192, 96);
-        ready = new TextureRegion(items, 320, 224, 192, 32);
-        gameOver = new TextureRegion(items, 352, 256, 160, 96);
-        highScoresRegion = new TextureRegion(Assets.items, 0, 257, 300, 110 / 3);
-        logo = new TextureRegion(items, 0, 352, 274, 142);
-        soundOff = new TextureRegion(items, 0, 0, 64, 64);
-        soundOn = new TextureRegion(items, 64, 0, 64, 64);
-        arrow = new TextureRegion(items, 0, 64, 64, 64);
-        pause = new TextureRegion(items, 64, 64, 64, 64);
 
-        spring = new TextureRegion(items, 128, 0, 32, 32);
-        castle = new TextureRegion(items, 128, 64, 64, 64);
+        items = new Texture(game, "items-test.png");
+        mainMenu = new TextureRegion(items, 0, 224*2, 300*2, 110*2);
+        pauseMenu = new TextureRegion(items, 224*2, 128*2, 192*2, 96*2);
+        ready = new TextureRegion(items, 320*2, 224*2, 192*2, 32*2);
+        gameOver = new TextureRegion(items, 352*2, 256*2, 160*2, 96*2);
+        highScoresRegion = new TextureRegion(items, 0, 257*2, 300*2, (110 * 2)/3);
+        logo = new TextureRegion(items, 0, 352*2, 274*2, 142*2);
+        soundOff = new TextureRegion(items, 0, 0, 64*2, 64*2);
+        soundOn = new TextureRegion(items, 64*2, 0, 64*2, 64*2);
+        arrow = new TextureRegion(items, 0, 64*2, 64*2, 64*2);
+        pause = new TextureRegion(items, 64*2, 64*2, 64*2, 64*2);
+
+        spring = new TextureRegion(items, 128*2, 0, 32*2, 32*2);
+        castle = new TextureRegion(items, 128*2, 64*2, 64*2, 64*2);
         coinAnim = new Animation(0.2f,
-                new TextureRegion(items, 128, 32, 32, 32),
-                new TextureRegion(items, 160, 32, 32, 32),
-                new TextureRegion(items, 192, 32, 32, 32),
-                new TextureRegion(items, 160, 32, 32, 32));
+                new TextureRegion(items, 128*2, 32*2, 32*2, 32*2),
+                new TextureRegion(items, 160*2, 32*2, 32*2, 32*2),
+                new TextureRegion(items, 192*2, 32*2, 32*2, 32*2),
+                new TextureRegion(items, 160*2, 32*2, 32*2, 32*2));
         playerJump = new Animation(0.2f,
-                new TextureRegion(items, 0, 128, 32, 32),
-                new TextureRegion(items, 32, 128, 32, 32));
+                new TextureRegion(items, 0, 128*2, 32*2, 32*2),
+                new TextureRegion(items, 32*2, 128*2, 32*2, 32*2));
         playerFall = new Animation(0.2f,
-                new TextureRegion(items, 64, 128, 32, 32),
-                new TextureRegion(items, 96, 128, 32, 32));
+                new TextureRegion(items, 64*2, 128*2, 32*2, 32*2),
+                new TextureRegion(items, 96*2, 128*2, 32*2, 32*2));
         playerHit = new TextureRegion(items, 128, 128, 32, 32);
         squirrelFly = new Animation(0.2f,
-                new TextureRegion(items, 0, 160, 32, 32),
-                new TextureRegion(items, 32, 160, 32, 32));
-        platform = new TextureRegion(items, 64, 160, 64, 16);
+                new TextureRegion(items, 0, 160*2, 32*2, 32*2),
+                new TextureRegion(items, 32*2, 160*2, 32*2, 32*2));
+        platform = new TextureRegion(items, 64*2, 160*2, 64*2, 16*2);
         brakingPlatform = new Animation(0.2f,
-                new TextureRegion(items, 64, 160, 64, 16),
-                new TextureRegion(items, 64, 176, 64, 16),
-                new TextureRegion(items, 64, 192, 64, 16),
-                new TextureRegion(items, 64, 208, 64, 16));
+                new TextureRegion(items, 64*2, 160*2, 64*2, 16*2),
+                new TextureRegion(items, 64*2, 176*2, 64*2, 16*2),
+                new TextureRegion(items, 64*2, 192*2, 64*2, 16*2),
+                new TextureRegion(items, 64*2, 208*2, 64*2, 16*2));
 
         TextureRegion testRec = new TextureRegion(items, 370, 446, 142, 66);
 
-        font = new Font(items, 224, 0, 16, 16, 20);
+        fontsTexture = new Texture(game, "fontTexture.png");
+
+        font = new Font(fontsTexture, 0, 0, 16, 16, 20);
 
         music = game.getAudio().newMusic("music.mp3");
         music.setLooping(true);
