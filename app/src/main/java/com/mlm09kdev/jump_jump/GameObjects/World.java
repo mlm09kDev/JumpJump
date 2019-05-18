@@ -21,14 +21,14 @@ public class World {
         void coin();
     }
 
-    public static final float WORLD_WIDTH = 10;
+    static final float WORLD_WIDTH = 10;
     private static final float WORLD_HEIGHT = 150;
     private static final int WORLD_STATE_RUNNING = 0;
     public static final int WORLD_STATE_NEXT_LEVEL = 1;
     public static final int WORLD_STATE_GAME_OVER = 2;
-    public static final Vector2 gravity = new Vector2(0, -12);
+    static final Vector2 gravity = new Vector2(0, -12);
 
-    public static int level = 1;
+    public static int level = 9;
 
     public final Player player;
     public final List<Platform> platforms;
@@ -93,7 +93,7 @@ public class World {
             y += (maxJumpHeight - 0.5f);
             y -= rand.nextFloat() * (maxJumpHeight / 3);
 
-            newPlatformY += 1f + level / 10;
+            newPlatformY += 1f + (level / 10f);
             if (newPlatformY > y + 1) {
                 newPlatformY = y;
             }
@@ -110,8 +110,8 @@ public class World {
             isEnemyReadyToBeGenerated = true;
         }*/
         if (level >= 10) {
-            int enemyQuotient = (platforms.size() - 1) / (level - 10 - 1);
-            int enemyRemainder = (platforms.size() - 1) % (level - 10 - 1);
+            int enemyQuotient = (platforms.size() - 1) / (level - 5 - 1);
+            int enemyRemainder = (platforms.size() - 1) % (level - 5 - 1);
 
             int enemyIndex = 10;
             do {
