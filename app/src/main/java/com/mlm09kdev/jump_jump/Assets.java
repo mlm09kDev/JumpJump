@@ -47,8 +47,8 @@ class Assets {
     public static Sound clickSound;
 
     public static void load(GLGame game){
-        background = new Texture(game, "background.png");
-        backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
+        background = new Texture(game, "background-2.png");
+        backgroundRegion = new TextureRegion(background, 0, 0, 1080, 1920);
 
 
         items = new Texture(game, "items.png");
