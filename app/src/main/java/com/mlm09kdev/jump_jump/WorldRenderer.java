@@ -34,7 +34,7 @@ class WorldRenderer {
     }
 
     public void render() {
-        if(world.player.position.y > cam.position.y )
+        if (world.player.position.y > cam.position.y)
             cam.position.y = world.player.position.y;
         cam.setViewportAndMatrices();
         renderBackground();
@@ -66,7 +66,7 @@ class WorldRenderer {
 
     private void renderPlayer() {
         TextureRegion keyFrame;
-        switch(world.player.state) {
+        switch (world.player.state) {
             case Player.PLAYER_STATE_FALL:
                 keyFrame = Assets.playerFall.getKeyFrame(world.player.stateTime, Animation.ANIMATION_LOOPING);
                 break;
@@ -78,16 +78,16 @@ class WorldRenderer {
                 keyFrame = Assets.playerHit;
         }
 
-        float side = world.player.velocity.x < 0? -1: 1;
+        float side = world.player.velocity.x < 0 ? -1 : 1;
         batcher.drawSprite(world.player.position.x, world.player.position.y, side * 1, 1, keyFrame);
     }
 
     private void renderPlatforms() {
         int len = world.platforms.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             Platform platform = world.platforms.get(i);
             TextureRegion keyFrame = Assets.platform;
-            if(platform.state == Platform.PLATFORM_STATE_PULVERIZING) {
+            if (platform.state == Platform.PLATFORM_STATE_PULVERIZING) {
                 keyFrame = Assets.brakingPlatform.getKeyFrame(platform.stateTime, Animation.ANIMATION_NONLOOPING);
             }
 
@@ -98,13 +98,17 @@ class WorldRenderer {
 
     private void renderItems() {
         int len = world.springs.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             Spring spring = world.springs.get(i);
-            batcher.drawSprite(spring.position.x, spring.position.y, 1, 1, Assets.spring);
+            TextureRegion keyFrame = Assets.spring;
+            if (spring.state == Spring.SPRING_STATE_ANIMATE) {
+                keyFrame = Assets.sprigAnimation.getKeyFrame(spring.stateTime, Animation.ANIMATION_NONLOOPING);
+            }
+            batcher.drawSprite(spring.position.x, spring.position.y, 1, .35f, keyFrame);
         }
 
         len = world.coins.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             Coin coin = world.coins.get(i);
             TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
             batcher.drawSprite(coin.position.x, coin.position.y, 1, 1, keyFrame);
@@ -113,10 +117,10 @@ class WorldRenderer {
 
     private void renderSquirrels() {
         int len = world.squirrels.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             Squirrel squirrel = world.squirrels.get(i);
             TextureRegion keyFrame = Assets.squirrelFly.getKeyFrame(squirrel.stateTime, Animation.ANIMATION_LOOPING);
-            float side = squirrel.velocity.x < 0?-1:1;
+            float side = squirrel.velocity.x < 0 ? -1 : 1;
             batcher.drawSprite(squirrel.position.x, squirrel.position.y, side * 1, 1, keyFrame);
         }
     }

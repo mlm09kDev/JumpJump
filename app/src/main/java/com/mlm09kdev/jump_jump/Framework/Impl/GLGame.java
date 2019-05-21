@@ -99,7 +99,7 @@ public abstract class GLGame extends Activity implements Game, Renderer {
         adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         adParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        adLayout.addView(adView, adParams);
+        //adLayout.addView(adView, adParams);
         gameLayout.addView(glView);
         adView.loadAd(new AdRequest.Builder().addTestDevice(AD_UNIT_ID).build());
 
@@ -225,7 +225,7 @@ public abstract class GLGame extends Activity implements Game, Renderer {
         this.runOnUiThread(new Runnable() {
             public void run() {
                 if (mInterstitialAd.isLoaded()) {
-                  //  mInterstitialAd.show();
+                    //mInterstitialAd.show();
                 } else {
                     Log.d(TAG, "Interstitial ad is not loaded yet");
                 }

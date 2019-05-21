@@ -1,5 +1,6 @@
 package com.mlm09kdev.jump_jump.GameObjects;
 
+import com.mlm09kdev.jump_jump.Framework.GL.FPSCounter;
 import com.mlm09kdev.jump_jump.Framework.Math.OverlapTester;
 import com.mlm09kdev.jump_jump.Framework.Math.Vector2;
 
@@ -28,7 +29,7 @@ public class World {
     public static final int WORLD_STATE_GAME_OVER = 2;
     static final Vector2 gravity = new Vector2(0, -12);
 
-    public static int level = 9;
+    public static int level = 1;
 
     public final Player player;
     public final List<Platform> platforms;
@@ -43,6 +44,7 @@ public class World {
     public static int score = 0;
     public int levelScore;
     public int state;
+    FPSCounter fpsCounter;
 
     public World(WorldListener listener) {
         rand = new Random();
@@ -52,8 +54,9 @@ public class World {
         this.squirrels = new ArrayList<>();
         this.coins = new ArrayList<>();
         this.listener = listener;
-        this.levelScore =0;
+        this.levelScore = 0;
         generateLevel();
+        fpsCounter = new FPSCounter();
 
         this.heightSoFar = 0;
         this.state = WORLD_STATE_RUNNING;
@@ -78,7 +81,7 @@ public class World {
             if (level < 15 && rand.nextFloat() > 0.9f
                     && type != Platform.PLATFORM_TYPE_MOVING) {
                 Spring spring = new Spring(platformX,
-                        newPlatformY + Platform.PLATFORM_HEIGHT / 2
+                        newPlatformY + Platform.PLATFORM_HEIGHT / 4
                                 + Spring.SPRING_HEIGHT / 2);
                 springs.add(spring);
                 isSpringLoaded = true;
@@ -145,9 +148,11 @@ public class World {
         updatePlatforms(deltaTime);
         updateSquirrels(deltaTime);
         updateCoins(deltaTime);
+        updateSpring(deltaTime);
         if (player.state != Player.PLAYER_STATE_HIT)
-            checkCollisions();
+            checkCollisions(deltaTime);
         checkGameOver();
+        fpsCounter.logFrame();
     }
 
     private void updatePlayer(float deltaTime, float accelX) {
@@ -172,6 +177,15 @@ public class World {
         }
     }
 
+    private void updateSpring(float deltaTime) {
+        int len = springs.size();
+        for (int i = 0; i < len; i++) {
+            Spring spring = springs.get(i);
+            spring.update(deltaTime);
+        }
+    }
+
+
     //Squirrel movement
     private void updateSquirrels(float deltaTime) {
         int len = squirrels.size();
@@ -189,10 +203,10 @@ public class World {
         }
     }
 
-    private void checkCollisions() {
+    private void checkCollisions(float deltaTime) {
         checkPlatformCollisions();
         checkSquirrelCollisions();
-        checkItemCollisions();
+        checkItemCollisions(deltaTime);
         checkCastleCollisions();
     }
 
@@ -228,7 +242,7 @@ public class World {
         }
     }
 
-    private void checkItemCollisions() {
+    private void checkItemCollisions(float deltaTime) {
         int len = coins.size();
         for (int i = 0; i < len; i++) {
             Coin coin = coins.get(i);
@@ -249,9 +263,13 @@ public class World {
             Spring spring = springs.get(i);
             if (player.position.y > spring.position.y) {
                 if (OverlapTester.overlapRectangles(player.bounds, spring.bounds)) {
-                    player.hitSpring();
-                    listener.highJump();
-                }
+                    if (spring.state != Spring.SPRING_STATE_ANIMATE) {
+                        spring.animate();
+                        player.hitSpring();
+                        listener.highJump();
+                    }
+                } else
+                    spring.state = Spring.SPRING_STATE_NORMAL;
             }
         }
     }
@@ -259,9 +277,8 @@ public class World {
     private void checkCastleCollisions() {
         if (OverlapTester.overlapRectangles(castle.bounds, player.bounds)) {
             state = WORLD_STATE_NEXT_LEVEL;
-            //if(coins.isEmpty())
             score += levelScore;
-            levelScore=0;
+            levelScore = 0;
             level++;
         }
     }
