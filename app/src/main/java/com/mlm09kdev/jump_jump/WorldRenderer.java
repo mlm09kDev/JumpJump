@@ -111,7 +111,7 @@ class WorldRenderer {
         for (int i = 0; i < len; i++) {
             Coin coin = world.coins.get(i);
             TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
-            batcher.drawSprite(coin.position.x, coin.position.y, 1, 1, keyFrame);
+            batcher.drawSprite(coin.position.x, coin.position.y, .5f, .75f, keyFrame);
         }
     }
 

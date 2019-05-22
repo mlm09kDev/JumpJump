@@ -73,17 +73,19 @@ class Assets {
 
         castle = new TextureRegion(items, 128 * 2, 64 * 2, 64 * 2, 64 * 2);
         coinAnim = new Animation(.2f,
-                new TextureRegion(items, 128 * 2, 32 * 2, 32 * 2, 32 * 2),
-                new TextureRegion(items, 160 * 2, 32 * 2, 32 * 2, 32 * 2),
-                new TextureRegion(items, 192 * 2, 32 * 2, 32 * 2, 32 * 2),
-                new TextureRegion(items, 160 * 2, 32 * 2, 32 * 2, 32 * 2));
+                new TextureRegion(items, 280, 0, 64, 64),
+                new TextureRegion(items, 360, 0, 64, 64),
+                new TextureRegion(items, 280, 70, 64, 64),
+                new TextureRegion(items, 360, 70, 64, 64),
+                new TextureRegion(items, 280, 70, 64, 64),
+                new TextureRegion(items, 360, 0, 64, 64));
         playerJump = new Animation(0.2f,
                 new TextureRegion(items, 0, 128 * 2, 32 * 2, 32 * 2),
                 new TextureRegion(items, 32 * 2, 128 * 2, 32 * 2, 32 * 2));
         playerFall = new Animation(0.2f,
                 new TextureRegion(items, 64 * 2, 128 * 2, 32 * 2, 32 * 2),
                 new TextureRegion(items, 96 * 2, 128 * 2, 32 * 2, 32 * 2));
-        playerHit = new TextureRegion(items, 128, 128, 32, 32);
+        playerHit = new TextureRegion(items, 128*2, 128*2, 32*2, 32*2);
         squirrelFly = new Animation(0.2f,
                 new TextureRegion(items, 0, 160 * 2, 32 * 2, 32 * 2),
                 new TextureRegion(items, 32 * 2, 160 * 2, 32 * 2, 32 * 2));
@@ -95,7 +97,7 @@ class Assets {
                 new TextureRegion(items, 64 * 2, 208 * 2, 64 * 2, 16 * 2));
 
 
-        font = new Font(items, 225*2, 0, 16, 32, 40);
+        font = new Font(items, 225 * 2, 0, 16, 32, 40);
 
         music = game.getAudio().newMusic("music.mp3");
         music.setLooping(true);

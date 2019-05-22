@@ -34,7 +34,7 @@ public class MainMenuScreen extends GLScreen {
     private final int mainMenuWidth = 800;
     private final int mainMenuHeight = 498;
 
-    private final int soundIconXY = 64;
+    private final int soundIconXY = 64*2;
     private final int SoundIconWidthHeight = 128;
 
 
@@ -125,7 +125,7 @@ public class MainMenuScreen extends GLScreen {
         batcher.drawSprite(mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight, Assets.mainMenu);
        // batcher.drawSprite(mainMenuX, mainMenuY+165, mainMenuWidth-400, mainMenuHeight-315, Assets.testRec);
 
-        batcher.drawSprite(soundIconXY, soundIconXY, SoundIconWidthHeight, SoundIconWidthHeight, Settings.soundEnabled ? Assets.soundOn : Assets.soundOff);
+        batcher.drawSprite(soundIconXY, soundIconXY, SoundIconWidthHeight * 2, SoundIconWidthHeight * 2, Settings.soundEnabled ? Assets.soundOn : Assets.soundOff);
 
         batcher.endBatch();
 

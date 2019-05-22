@@ -13,8 +13,8 @@ public class Font {
             int offsetX, int offsetY,
             int glyphsPerRow, int glyphWidth, int glyphHeight) {        
         this.texture = texture;
-        this.glyphWidth = glyphWidth;
-        this.glyphHeight = glyphHeight;
+        this.glyphWidth = glyphWidth/2;
+        this.glyphHeight = glyphHeight/2;
         int x = offsetX;
         int y = offsetY;
         for(int i = 0; i < 96; i++) {
