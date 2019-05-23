@@ -12,6 +12,17 @@ import com.mlm09kdev.jump_jump.Framework.Sound;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 class Assets {
+    //Todo: update end level graphics
+    //Todo: Make High Score persistent.
+    //Todo: Update High Score Page to be more useful.
+    //Todo: Fix Multi-touch crashing
+    //Todo: Fix BackButton Bug of not saving Game.
+    //Todo: Fix Bounding Box for Touch Events.
+    //Todo: Add Restart Option on Pause Menu.
+    //Todo: Remove Platform pulverize options.
+    //Todo: Balance Levels and point Gathering.
+    //
+
     public static Texture background;
     public static TextureRegion backgroundRegion;
 
