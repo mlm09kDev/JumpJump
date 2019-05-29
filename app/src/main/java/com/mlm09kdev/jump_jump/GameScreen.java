@@ -18,13 +18,14 @@ import javax.microedition.khronos.opengles.GL10;
  * Created by Manuel Montes de Oca on 5/4/2019.
  */
 public class GameScreen extends GLScreen {
-    private static final int GAME_READY = 0;
-    private static final int GAME_RUNNING = 1;
-    private static final int GAME_PAUSED = 2;
+    public static final int GAME_READY = 0;
+    public static final int GAME_RUNNING = 1;
+    public static final int GAME_PAUSED = 2;
     private static final int GAME_LEVEL_END = 3;
-    private static final int GAME_OVER = 4;
+    public static final int GAME_OVER = 4;
+    public static final int GAME_NOT_RUNNING = 5;
 
-    private int state;
+    public static int state;
     private final Camera2D guiCam;
     private final Vector2 touchPoint;
     private final SpriteBatcher batcher;
@@ -160,6 +161,7 @@ public class GameScreen extends GLScreen {
 
             if (OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
                 Assets.playSound(Assets.clickSound);
+                state = GAME_NOT_RUNNING;
                 game.setScreen(new MainMenuScreen(game));
                 return;
 
@@ -191,6 +193,7 @@ public class GameScreen extends GLScreen {
             TouchEvent event = touchEvents.get(i);
             if (event.type != TouchEvent.TOUCH_UP)
                 continue;
+            state = GAME_NOT_RUNNING;
             game.setScreen(new MainMenuScreen(game));
         }
         if (isAdReadytoLoad) {

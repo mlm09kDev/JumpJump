@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.mlm09kdev.jump_jump.Framework.Game;
 import com.mlm09kdev.jump_jump.Framework.Impl.GLGame;
 import com.mlm09kdev.jump_jump.Framework.Screen;
 
@@ -157,4 +158,12 @@ public class JumpJumpActivity extends GLGame {
         return alertDialog;
     }
 
+    @Override
+    public void onBackPressed() {
+        if(  GameScreen.state == GameScreen.GAME_RUNNING)
+        GameScreen.state = GameScreen.GAME_PAUSED;
+
+        if(GameScreen.state == GameScreen.GAME_NOT_RUNNING || GameScreen.state == GameScreen.GAME_READY)
+            finish();
+    }
 }

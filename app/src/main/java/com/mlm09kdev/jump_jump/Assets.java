@@ -21,7 +21,6 @@ class Assets {
     //Todo: Add Restart Option on Pause Menu.
     //Todo: Remove Platform pulverize options.
     //Todo: Balance Levels and point Gathering.
-    //
 
     public static Texture background;
     public static TextureRegion backgroundRegion;
