@@ -16,7 +16,6 @@ class Assets {
     //Todo: Make High Score persistent.
     //Todo: Update High Score Page to be more useful.
     //Todo: Fix Multi-touch crashing
-    //Todo: Fix BackButton Bug of not saving Game.
     //Todo: Fix Bounding Box for Touch Events.
     //Todo: Add Restart Option on Pause Menu.
     //Todo: Remove Platform pulverize options.

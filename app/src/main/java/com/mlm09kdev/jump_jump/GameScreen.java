@@ -180,7 +180,7 @@ public class GameScreen extends GLScreen {
             renderer = new WorldRenderer(glGraphics, batcher, world);
             World.score = lastScore;
             state = GAME_READY;
-
+            Settings.save(game.getFileIO());
 
         }
 
@@ -254,7 +254,7 @@ public class GameScreen extends GLScreen {
     }
 
     private void presentLevelEnd() {
-        String topText = 10 - world.getCoins() + "/10 Coins Gathered";
+        String topText = 10 - world.getCoins() + "/10 Coins";
         float topWidth = Assets.font.glyphWidth * topText.length();
         Assets.font.drawText(batcher, topText, 180 - topWidth / 2, 480 - 80);
 
